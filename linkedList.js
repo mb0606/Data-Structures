@@ -17,6 +17,16 @@ function LinkedList(){
         return head;
     }
 
+    this.printList = function(){
+        var currentNode = head;
+        var currentIndex = 0;
+        while(currentIndex <= length){
+            console.log(currentIndex , "--",currentNode.element)
+            currentNode = currentNode.next;
+            currentIndex++
+        }
+    }
+
     this.add = function(element){
         var node = new Node(element);
         if(head === null){
@@ -40,7 +50,7 @@ function LinkedList(){
             head = currentNode.next
             length--;
         } else {
-            while(currentNode.next || current.element  === element){
+            while(currentNode.next || currentNode.element  === element){
                 previousNode = currentNode;
                 currentNode = currentNode.next;
             }
@@ -65,7 +75,7 @@ function LinkedList(){
             }
             currentNode = currentNode.next;
         }
-        return index;
+        return -1;
     }
     this.elementAt = function(index){
         var currentNode = head;
@@ -79,19 +89,20 @@ function LinkedList(){
         }
         return currentNode.element;
     }
-    this.insertNode = function(index, element){
+    this.insertAt = function(index, element){
         var node = new Node(element);
         var currentNode = head;
         var previousNode;
         var currentIndex = 0;
 
-        if(index < 0 || index >=length){
+        if(index < 0 || index >= length){
             return false;
         }
         if(index === 0){
             node.next = currentNode;
+            head = node;
         } else {
-            while(currentInex < index){
+            while(currentIndex < index){
                 previousNode = currentNode;
                 currentNode = currentNode.next
                 currentIndex++
@@ -100,10 +111,55 @@ function LinkedList(){
             node.next = currentNode;
 
         };
-
         length++
+        return node.element;
+    }
+    this.removeAt = function(index){
+        var currentNode = head;
+        var previousNode;
+        var currentIndex = 0;
 
+        if(index < 0 || index >= length){
+            return false;
+        }
+        if(index === 0 ){
+            head = currentNode.next;
+        } else {
+            while(currentIndex < index){
+                previousNode = currentNode;
+                currentNode = currentNode.next;
+                currentIndex++
+            }
+            previousNode.next = currentNode.next;
+        }
+        length--;
+        return currentNode.element;
     }
 
 
 }
+
+var myList = new LinkedList();
+myList.add("0");
+myList.add("1");
+myList.add("2");
+myList.add("3");
+myList.add("4");
+console.log(myList.size());
+myList.removeAt(1);
+console.log(myList.size());
+myList.insertAt(0,"beginning")
+myList.remove();
+console.log(myList.elementAt(0));
+myList.insertAt(2,"4");
+myList.printList()
+console.log("Size before added",myList.size());
+myList.add("end");
+console.log("Size after added",myList.size());
+myList.printList()
+console.log(myList.indexOf("new endding"));
+console.log(myList.elementAt(4));
+
+
+
+
