@@ -27,8 +27,29 @@ function LinkedList(){
                 currentNode = currentNode.next;
             }
             currentNode.next = node;
+            length++;
         }
+
     }
+
+    this.remove = function(element){
+        var currentNode = head;
+        var previousNode;
+        
+        if(currentNode.element === element){
+            head = currentNode.next
+            length--;
+        } else {
+            while(currentNode.next || current.element  === element){
+                previousNode = currentNode;
+                currentNode = currentNode.next;
+            }
+            previousNode.next = currentNode.next;
+            length--;
+        }
+        
+    }
+
 
 
 
