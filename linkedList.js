@@ -50,6 +50,10 @@ function LinkedList(){
         
     }
 
+    this.isEmpty = function(){
+        return length === 0;
+    }
+    
 
 
 
