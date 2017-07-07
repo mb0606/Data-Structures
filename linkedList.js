@@ -79,6 +79,31 @@ function LinkedList(){
         }
         return currentNode.element;
     }
+    this.insertNode = function(index, element){
+        var node = new Node(element);
+        var currentNode = head;
+        var previousNode;
+        var currentIndex = 0;
+
+        if(index < 0 || index >=length){
+            return false;
+        }
+        if(index === 0){
+            node.next = currentNode;
+        } else {
+            while(currentInex < index){
+                previousNode = currentNode;
+                currentNode = currentNode.next
+                currentIndex++
+            }
+            previousNode.next = node;
+            node.next = currentNode;
+
+        };
+
+        length++
+
+    }
 
 
 }
