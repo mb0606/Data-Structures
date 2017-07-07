@@ -67,6 +67,18 @@ function LinkedList(){
         }
         return index;
     }
+    this.elementAt = function(index){
+        var currentNode = head;
+        var count = 0;
+        if(index < 0 || index >=length){
+            return null;
+        }
+        while(count < index){
+            currentNode = currentNode.next;
+            count++
+        }
+        return currentNode.element;
+    }
 
 
 }
