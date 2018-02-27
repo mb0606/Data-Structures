@@ -55,6 +55,9 @@ bool LinkedType::isFull() const
 int LinkedType::getLength() {
 	return length;
 }
+void LinkedType::printTail() {
+	cout << "This is the tail: " << tail->data << endl;
+}
 
 void LinkedType::show() {
 	NodeType *temp = head;
@@ -85,13 +88,19 @@ void LinkedType::deleteItem(int item) {
 		if (item == head->data) {
 			head = head->next;
 			length--;
-		}
-		else {
+		} else {
 			while (current_node != nullptr) {
 				if (item == current_node->data) {
-					previous_node->next = current_node->next;
-					current_node = current_node->next;
-					length--;
+					if (current_node == tail) {
+						tail = previous_node;
+						previous_node->next = nullptr;
+						current_node = nullptr;
+					}
+					else {
+						previous_node->next = current_node->next;
+						current_node = nullptr;
+						length--;
+					}
 				}
 				else {
 					previous_node = previous_node->next;
@@ -110,10 +119,20 @@ void LinkedType::insertAfter(int item, int node_value) {
 	NodeType *current_node = head;
 	while (current_node != nullptr) {
 		if (current_node->data == item) {
-			new_node->next = current_node->next;
-			current_node->next = new_node;
-			current_node = current_node->next;
-			length++;
+			if (current_node == tail) {
+				new_node->next = nullptr;
+				current_node->next = new_node;
+				tail = new_node;
+				current_node = current_node->next;
+				length++;
+			}
+			else {
+				new_node->next = current_node->next;
+				current_node->next = new_node;
+				current_node = current_node->next;
+				length++;
+			}
+
 		}
 		else {
 			current_node = current_node->next;
