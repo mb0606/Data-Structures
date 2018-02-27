@@ -104,7 +104,6 @@ void LinkedType::deleteItem(int item) {
 	}
 
 }
-//O(n)
 void LinkedType::insertAfter(int item, int node_value) {
 	NodeType *new_node = new NodeType;
 	new_node->data = node_value;
