@@ -11,7 +11,6 @@ LinkedType::LinkedType()
 	head = nullptr;
 	tail = nullptr;
 }
-
 //O(1)
 void LinkedType::insertItem(int item) 
 {
@@ -29,15 +28,12 @@ void LinkedType::insertItem(int item)
 		tail->next = temp;
 		tail = temp;
 	}
-
-
 	length++;
 }
 //O(1)
 bool LinkedType::isFull() const 
 {
 	NodeType *location;
-
 	try
 	{
 		location = new NodeType;
@@ -47,18 +43,18 @@ bool LinkedType::isFull() const
 	catch(bad_alloc exception)
 	{
 		return true;
-	}
-	
+	}	
 }
 
 //O(1)
 int LinkedType::getLength() {
 	return length;
 }
+//O(n)
 void LinkedType::printTail() {
 	cout << "This is the tail: " << tail->data << endl;
 }
-
+//O(n)
 void LinkedType::show() {
 	NodeType *temp = head;
 	while (temp != nullptr) {
@@ -66,7 +62,6 @@ void LinkedType::show() {
 		temp = temp->next;
 	}
 }
-
 //O(n)
 void LinkedType::makeEmpty()
 {
@@ -78,7 +73,6 @@ void LinkedType::makeEmpty()
 	}
 	length = 0;
 }
-
 //O(n)
 void LinkedType::deleteItem(int item) {
 	if (head != nullptr) {
