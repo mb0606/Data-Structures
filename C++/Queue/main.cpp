@@ -1,6 +1,9 @@
-// airLineTickets.cpp : Defines the entry point for the console application.
+// arrayQueue.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
 #include <iostream>
-#include "lqueue.h"
+#include "aqueue.h"
 #include "string"
 
 
@@ -11,9 +14,9 @@ struct passanger {
 };
 
 int showMenu(void);
-void addPassenger(LQueue<passanger>* queue);
-void deletePassenger(LQueue<passanger>* queue);
-void showPassengers(LQueue<passanger>* queue);
+void addPassenger(AQueue<passanger>* queue);
+void deletePassenger(AQueue<passanger>* queue);
+void showPassengers(AQueue<passanger>* queue);
 
 
 const int LINES = 2;
@@ -22,7 +25,7 @@ const int LINES = 2;
 int main()
 {
 
-	LQueue<passanger> qPassengers[LINES];
+	AQueue<passanger> qPassengers[LINES];
 
 	int x;
 	do {
@@ -36,12 +39,12 @@ int main()
 		case 3: showPassengers(qPassengers);
 			break;
 		}
-        if(x < 1 || x >4) {
-        cout << "Invalid entry" << endl;
-        }
+		if (x < 1 || x >4) {
+			cout << "Invalid entry" << endl;
+		}
 	} while (x != 4);
 
-
+	system("pause");
 	return 0;
 }
 
@@ -57,43 +60,43 @@ int showMenu(void)
 	cout << "4. Exit\n";
 	cout << "Enter choice: ";
 	cin >> select;
+	cin.ignore();
 	cin.clear();
 	return select;
 }
 
-void addPassenger(LQueue<passanger>* queue) {
-    if(queue[0].length() < 3 || queue[1].length() < 3){
-        string name;
-        cout << "Enter name: ";
-        cin >> name;
-        cin.clear();
-        if (queue[0].length() < 3) {
-            passanger bookingPassanger;
-            bookingPassanger.name = name;
-            queue[0].enqueue(bookingPassanger);
+void addPassenger(AQueue<passanger>* queue) {
+	if (queue[0].length() < 3 || queue[1].length() < 3) {
+		string name;
+		cout << "Enter name: ";
+		getline(cin, name);
+		if (queue[0].length() < 3) {
+			passanger bookingPassanger;
+			bookingPassanger.name = name;
+			queue[0].enqueue(bookingPassanger);
 
-            //cout << "Booking " << name << " on flight"<< endl;
-        }
-        else {
-            cout << "Sorry. Plane fully booked. Adding "<< name <<" to waiting list" << endl;
-            passanger waitPassanger;
-            waitPassanger.name = name;
-            queue[1].enqueue(waitPassanger);
-        }
-    }
-    else {
-        cout << "Sorry. Plane and waiting list fully booked. Try later" << endl;
-    }
+			//cout << "Booking " << name << " on flight"<< endl;
+		}
+		else {
+			cout << "Sorry. Plane fully booked. Adding " << name << " to waiting list" << endl;
+			passanger waitPassanger;
+			waitPassanger.name = name;
+			queue[1].enqueue(waitPassanger);
+		}
+	}
+	else {
+		cout << "Sorry. Plane and waiting list fully booked. Try later" << endl;
+	}
 
 }
-void deletePassenger(LQueue<passanger>* queue) {
+void deletePassenger(AQueue<passanger>* queue) {
 	if (queue[0].length() != 0) {
 		passanger personBooked = queue[0].dequeue();
 		//cout << "Removing " << personBooked.name << " from booked passengers" << endl;
 		if (queue[1].length() != 0) {
 			passanger personWaiting = queue[1].dequeue();
 			queue[0].enqueue(personWaiting);
-			cout << "Adding "<< personWaiting.name <<" from waiting list" << endl;
+			cout << "Adding " << personWaiting.name << " from waiting list" << endl;
 		}
 	}
 	else {
@@ -101,19 +104,34 @@ void deletePassenger(LQueue<passanger>* queue) {
 	}
 
 }
-void showPassengers(LQueue<passanger>* queue) {
-	if(queue[0].length() > 0) {
+void showPassengers(AQueue<passanger>* queue) {
+	if (queue[0].length() > 0) {
+		AQueue<passanger> * tempQueue = new AQueue<passanger>();
 		cout << "Booked Passengers" << endl;
-		cout << "=================";
-		queue[0].printValues();
-        if (queue[1].length() > 0) {
-            cout << "Waiting list" << endl;
-            cout << "=================";
- 		    queue[1].printValues();
-        }
-        else {
-            cout << "No passengers on waiting list" << endl;
-        }
+		cout << "=================\n";
+		int length = queue[0].length();
+		for (int i = 0; i < length; i++) {
+			passanger tempPassanger = queue[0].dequeue();
+			cout << tempPassanger.name << endl;
+			queue[0].enqueue(tempPassanger);
+
+		}
+		//queue[0].printValues();
+		if (queue[1].length() > 0) {
+			AQueue<passanger> * tempQueue = new AQueue<passanger>();
+			cout << "Waiting list" << endl;
+			cout << "=================";
+			int length = queue[1].length();
+			for (int i = 0; i < length; i++) {
+				passanger tempPassanger = queue[1].dequeue();
+				cout << tempPassanger.name << endl;
+				queue[1].enqueue(tempPassanger);
+
+			}
+		}
+		else {
+			cout << "No passengers on waiting list" << endl;
+		}
 	}
 	else {
 		cout << "No passengers" << endl;
