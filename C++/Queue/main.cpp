@@ -9,14 +9,14 @@
 
 using namespace std;
 
-struct passanger {
+struct passenger {
 	string name;
 };
 
 int showMenu(void);
-void addPassenger(AQueue<passanger>* queue);
-void deletePassenger(AQueue<passanger>* queue);
-void showPassengers(AQueue<passanger>* queue);
+void addPassenger(AQueue<passenger>* queue);
+void deletePassenger(AQueue<passenger>* queue);
+void showPassengers(AQueue<passenger>* queue);
 
 
 const int LINES = 2;
@@ -25,7 +25,7 @@ const int LINES = 2;
 int main()
 {
 
-	AQueue<passanger> qPassengers[LINES];
+	AQueue<passenger> qPassengers[LINES];
 
 	int x;
 	do {
@@ -65,13 +65,13 @@ int showMenu(void)
 	return select;
 }
 
-void addPassenger(AQueue<passanger>* queue) {
+void addPassenger(AQueue<passenger>* queue) {
 	if (queue[0].length() < 3 || queue[1].length() < 3) {
 		string name;
 		cout << "Enter name: ";
 		getline(cin, name);
 		if (queue[0].length() < 3) {
-			passanger bookingPassanger;
+			passenger bookingPassanger;
 			bookingPassanger.name = name;
 			queue[0].enqueue(bookingPassanger);
 
@@ -79,7 +79,7 @@ void addPassenger(AQueue<passanger>* queue) {
 		}
 		else {
 			cout << "Sorry. Plane fully booked. Adding " << name << " to waiting list" << endl;
-			passanger waitPassanger;
+			passenger waitPassanger;
 			waitPassanger.name = name;
 			queue[1].enqueue(waitPassanger);
 		}
@@ -89,12 +89,12 @@ void addPassenger(AQueue<passanger>* queue) {
 	}
 
 }
-void deletePassenger(AQueue<passanger>* queue) {
+void deletePassenger(AQueue<passenger>* queue) {
 	if (queue[0].length() != 0) {
-		passanger personBooked = queue[0].dequeue();
+		passenger personBooked = queue[0].dequeue();
 		//cout << "Removing " << personBooked.name << " from booked passengers" << endl;
 		if (queue[1].length() != 0) {
-			passanger personWaiting = queue[1].dequeue();
+			passenger personWaiting = queue[1].dequeue();
 			queue[0].enqueue(personWaiting);
 			cout << "Adding " << personWaiting.name << " from waiting list" << endl;
 		}
@@ -104,26 +104,26 @@ void deletePassenger(AQueue<passanger>* queue) {
 	}
 
 }
-void showPassengers(AQueue<passanger>* queue) {
+void showPassengers(AQueue<passenger>* queue) {
 	if (queue[0].length() > 0) {
-		AQueue<passanger> * tempQueue = new AQueue<passanger>();
+		AQueue<passenger> * tempQueue = new AQueue<passenger>();
 		cout << "Booked Passengers" << endl;
 		cout << "=================\n";
 		int length = queue[0].length();
 		for (int i = 0; i < length; i++) {
-			passanger tempPassanger = queue[0].dequeue();
+			passenger tempPassanger = queue[0].dequeue();
 			cout << tempPassanger.name << endl;
 			queue[0].enqueue(tempPassanger);
 
 		}
 		//queue[0].printValues();
 		if (queue[1].length() > 0) {
-			AQueue<passanger> * tempQueue = new AQueue<passanger>();
+			AQueue<passenger> * tempQueue = new AQueue<passenger>();
 			cout << "Waiting list" << endl;
-			cout << "=================";
+			cout << "=================\n";
 			int length = queue[1].length();
 			for (int i = 0; i < length; i++) {
-				passanger tempPassanger = queue[1].dequeue();
+				passenger tempPassanger = queue[1].dequeue();
 				cout << tempPassanger.name << endl;
 				queue[1].enqueue(tempPassanger);
 
